@@ -31,8 +31,17 @@
 		;
 	.
 
+:Agent
+	a owl:Class ;
+	.
+
 :Audience
 	a owl:Class ;
+	.
+
+:Author
+	a owl:Class ;
+	rdfs:subClassOf :Agent ;
 	.
 
 :AuthorBio
@@ -120,6 +129,28 @@
 :Citation
 	a owl:Class ;
 	rdfs:subClassOf :ContentStucturalComponent ;
+	.
+
+:Co-Author
+	a owl:Class ;
+	rdfs:subClassOf
+		:Author ,
+		[
+			a owl:Restriction ;
+			owl:onProperty :authorOf ;
+			owl:someValuesFrom :Collaboration ;
+		]
+		;
+	.
+
+:Collaboration
+	a owl:Class ;
+	rdfs:subClassOf [
+		a owl:Restriction ;
+		owl:onProperty :hasAuthor ;
+		owl:onClass :Author ;
+		owl:minQualifiedCardinality "2"^^xsd:nonNegativeInteger ;
+	] ;
 	.
 
 :CommunicatingwithData
@@ -365,9 +396,20 @@
 	rdfs:label "What Is the Semantic Web"@en ;
 	.
 
+:authorOf
+	a owl:ObjectProperty ;
+	rdfs:subPropertyOf owl:topObjectProperty ;
+	owl:inverseOf :hasAuthor ;
+	.
+
 :broadcastedAs
 	a owl:ObjectProperty ;
 	rdfs:subPropertyOf :manifestedAs ;
+	.
+
+:hasAuthor
+	a owl:ObjectProperty ;
+	rdfs:subPropertyOf owl:topObjectProperty ;
 	.
 
 :hasPart
