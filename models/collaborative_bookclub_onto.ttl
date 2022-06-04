@@ -14,6 +14,10 @@
 	owl:versionIRI <http://www.kgc.org/ontologies/2021/0.0> ;
 	.
 
+dcterms:Agent
+	a owl:Class ;
+	.
+
 :Acknowledgement
 	a owl:Class ;
 	rdfs:subClassOf
@@ -32,18 +36,13 @@
 		;
 	.
 
-:Agent
-	a owl:Class ;
-	rdfs:subClassOf dcterms:Agent ;
-	.
-
 :Audience
 	a owl:Class ;
 	.
 
 :Author
 	a owl:Class ;
-	rdfs:subClassOf :Agent ;
+	rdfs:subClassOf dcterms:Agent ;
 	.
 
 :AuthorBio
@@ -105,6 +104,19 @@
 		;
 	.
 
+:Book_collaboration
+	a owl:Class ;
+	rdfs:subClassOf
+		:Collaboration ,
+		[
+			a owl:Restriction ;
+			owl:onProperty :hasAuthor ;
+			owl:onClass :Author ;
+			owl:minQualifiedCardinality "2"^^xsd:nonNegativeInteger ;
+		]
+		;
+	.
+
 :Chapter
 	a owl:Class ;
 	rdfs:subClassOf
@@ -133,26 +145,20 @@
 	rdfs:subClassOf :ContentStucturalComponent ;
 	.
 
-:Co-Author
+:Co-author
 	a owl:Class ;
 	rdfs:subClassOf
 		:Author ,
 		[
 			a owl:Restriction ;
 			owl:onProperty :authorOf ;
-			owl:someValuesFrom :Collaboration ;
+			owl:someValuesFrom :Book_collaboration ;
 		]
 		;
 	.
 
 :Collaboration
 	a owl:Class ;
-	rdfs:subClassOf [
-		a owl:Restriction ;
-		owl:onProperty :hasAuthor ;
-		owl:onClass :Author ;
-		owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-	] ;
 	.
 
 :CommunicatingwithData
